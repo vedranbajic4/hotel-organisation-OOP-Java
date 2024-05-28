@@ -1,7 +1,6 @@
 package entity;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 
 public class Cenovnik {
 	private int id;
@@ -20,8 +19,10 @@ public class Cenovnik {
 		this.datumKraja = kraj;
 		this.id = id;
 	}
-
 	public int getId() {
 		return this.id;
+	}
+	public String toFileString() {
+		return id + "," + datumPocetka + "," + datumKraja;
 	}
 }

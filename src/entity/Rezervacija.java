@@ -9,67 +9,35 @@ import enums.StatusRezervacije;
 public class Rezervacija {
 	private int id;
 	private StatusRezervacije status;	//status (Na cekanju, Potvrdjena...)
-	private int tipSobe;				//zahtevani tip sobe
-	private String raspored;			//zahtevani broj kreveta
+	private TipSobe tipSobe;			//tip sobe koju gost zeli
 	private Soba soba;					//soba koja je dodeljena gostu
 	private LocalDate datumDolaska;
 	private LocalDate datumOdlaska;
-	private List<String> usluge;		//usluge koje gost zeli 
+	private List<DodatnaUsluga> usluge;		//usluge koje gost zeli 
 	
 	//konstruktori
 	public Rezervacija() {
-		this.usluge = new ArrayList<String>();
+		this.usluge = new ArrayList<DodatnaUsluga>();
 	}
-	public Rezervacija(int id, int tipSobe, String raspored, LocalDate datumDolaska, LocalDate datumOdlaska) {
+
+	public Rezervacija(int id, StatusRezervacije status, TipSobe tipSobe, Soba soba, LocalDate datumDolaska, LocalDate datumOdlaska) {
         this.id = id;
-        this.raspored = raspored;
-		this.status = StatusRezervacije.NACEKANJU;
+        this.status = status;
         this.tipSobe = tipSobe;
+        this.soba = soba;
         this.datumDolaska = datumDolaska;
         this.datumOdlaska = datumOdlaska;
-        this.usluge = new ArrayList<String>();
+        this.usluge = new ArrayList<DodatnaUsluga>();
     }
-	public Rezervacija(int id, int tipSobe, String raspored, LocalDate datumDolaska) {
-		this.id = id;
-		this.raspored = raspored;
-		this.status = StatusRezervacije.NACEKANJU;
-        this.tipSobe = tipSobe;
-        this.datumDolaska = datumDolaska;
-        this.usluge = new ArrayList<String>();
-    }
-	public Rezervacija(int id, int tipSobe, String raspored, LocalDate datumDolaska, LocalDate datumOdlaska, ArrayList<String> usluge) {
-		this.id = id;
-		this.raspored = raspored;
-		this.status = StatusRezervacije.NACEKANJU;
-        this.tipSobe = tipSobe;
-        this.datumDolaska = datumDolaska;
-        this.datumOdlaska = datumOdlaska;
-        this.usluge = usluge;
-    }
-	public Rezervacija(int id, int tipSobe, String raspored, LocalDate datumDolaska, ArrayList<String> usluge) {
-		this.id = id;
-		this.raspored = raspored;
-		this.status = StatusRezervacije.NACEKANJU;
-        this.tipSobe = tipSobe;
-        this.datumDolaska = datumDolaska;
-        this.usluge = usluge;
-    }
-	public Rezervacija(int id, int tipSobe, LocalDate datumDolaska, LocalDate datumOdlaska) {
+	public Rezervacija(int id, TipSobe tipSobe, LocalDate datumDolaska, LocalDate datumOdlaska) {
         this.id = id;
 		this.status = StatusRezervacije.NACEKANJU;
         this.tipSobe = tipSobe;
         this.datumDolaska = datumDolaska;
         this.datumOdlaska = datumOdlaska;
-        this.usluge = new ArrayList<String>();
+        this.usluge = new ArrayList<DodatnaUsluga>();
     }
-	public Rezervacija(int id, int tipSobe, LocalDate datumDolaska) {
-		this.id = id;
-		this.status = StatusRezervacije.NACEKANJU;
-        this.tipSobe = tipSobe;
-        this.datumDolaska = datumDolaska;
-        this.usluge = new ArrayList<String>();
-    }
-	public Rezervacija(int id, int tipSobe, LocalDate datumDolaska, LocalDate datumOdlaska, ArrayList<String> usluge) {
+	public Rezervacija(int id, TipSobe tipSobe, LocalDate datumDolaska, LocalDate datumOdlaska, ArrayList<DodatnaUsluga> usluge) {
 		this.id = id;
 		this.status = StatusRezervacije.NACEKANJU;
         this.tipSobe = tipSobe;
@@ -77,13 +45,7 @@ public class Rezervacija {
         this.datumOdlaska = datumOdlaska;
         this.usluge = usluge;
     }
-	public Rezervacija(int id, int tipSobe, LocalDate datumDolaska, ArrayList<String> usluge) {
-		this.id = id;
-		this.status = StatusRezervacije.NACEKANJU;
-        this.tipSobe = tipSobe;
-        this.datumDolaska = datumDolaska;
-        this.usluge = usluge;
-    }
+
 	//geteri i seteri
 	public LocalDate getDatumDolaska() {
 		return datumDolaska;
@@ -107,10 +69,10 @@ public class Rezervacija {
 		return this.soba;
 	}
 
-	public void dodajUslugu(String usluga) {
+	public void dodajUslugu(DodatnaUsluga usluga) {
 		this.usluge.add(usluga);
 	}
-	public List<String> getUsluge() {
+	public List<DodatnaUsluga> getUsluge() {
 		return this.usluge;
 	}
 
@@ -120,7 +82,12 @@ public class Rezervacija {
 	@Override 
 	public String toString() {
 		return "Rezervacija [id=" + id + ", status=" + status + ", tipSobe=" + tipSobe 
-				+ ", soba=" + soba + ", datumDolaska=" + datumDolaska + ", datumOdlaska=" + datumOdlaska + ", usluge="
-				+ usluge + "]";
+				+ ", soba=" + soba + ", datumDolaska=" + datumDolaska + ", datumOdlaska=" + datumOdlaska +  "]";
+	}
+	
+	public String toFileString() {
+		int sobaId = -1;
+		if(soba != null) sobaId = soba.getId();
+		return (id+","+status+","+tipSobe.getBrojKreveta()+"," +tipSobe.getRaspored()+","+sobaId+","+datumDolaska+","+datumOdlaska);
 	}
 }

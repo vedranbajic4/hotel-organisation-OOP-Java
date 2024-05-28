@@ -1,37 +1,34 @@
 package entity;
 
 public class Stavka {
-	private String naziv;
 	private int idCenovnika;
-	private double cena;
+	private DodatnaUsluga dodatnaUsluga;
 	private int id;
 	
 	//konstruktori
 	public Stavka() {}
 	public Stavka(int id, String naziv) {
-		this.naziv = naziv;
+		this.dodatnaUsluga = new DodatnaUsluga(naziv);
 		this.id = id;
 	}
-	public Stavka(int id, String naziv, double cena) {
-		this.naziv = naziv;
-		this.cena = cena;
+	public Stavka(int id, DodatnaUsluga du) {
+		this.dodatnaUsluga = du;
 		this.id = id;
 	}
-	public Stavka(int id, String naziv, int idCenovnika, double cena) {
-		this.naziv = naziv;
+	public Stavka(int id, DodatnaUsluga du, int idCenovnika) {
+		this.dodatnaUsluga = du;
+		this.id = id;
 		this.idCenovnika = idCenovnika;
-		this.cena = cena;
-		this.id = id;
 	}
 	//geteri, seteri
 	public int getId() {
 		return this.id;
 	}
-	public void setNaziv(String naziv) {
-        this.naziv = naziv;
-    }
-	public String getNaziv() {
-		return this.naziv;
+	public void setDodatnuUslugu(DodatnaUsluga t) {
+		this.dodatnaUsluga = t;
+	}
+	public DodatnaUsluga getDodatnaUsluga() {
+		return this.dodatnaUsluga;
 	}
 	public void setIdCenovnika(int idCenovnika) {
 		this.idCenovnika = idCenovnika;
@@ -39,10 +36,7 @@ public class Stavka {
 	public int getCenovnik() {
 		return this.idCenovnika;
 	}
-	public void setCena(double cena) {
-        this.cena = cena;
-    }
-	public double getCena() {
-	    return this.cena;
+	public String toFileString() {
+		return id + "," + dodatnaUsluga.getId() + "," + idCenovnika;
 	}
 }

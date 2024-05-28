@@ -1,59 +1,63 @@
 package managerKlase;
 
-import java.nio.file.StandardWatchEventKinds;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import entity.Cenovnik;
+import entity.DodatnaUsluga;
 import entity.Stavka;
+import entity.TipSobe;
 
 public class ManagerCenovnik{
 	private List<Stavka> stavke;
-	private List<Cenovnik>[] cenovnici = new ArrayList[50];
-	private int brSoba;
+	private HashMap<TipSobe, ArrayList<Cenovnik>> cenovnici;
+	private String filePath1 = "data/cenovnici.csv";
+	private String filePath2 = "data/stavke.csv";
 	
-	public ManagerCenovnik(int brSoba) {
-		this.brSoba = brSoba;
+	public ManagerCenovnik() {
 		stavke = new ArrayList<Stavka>();
-		for(int i = 1; i <= brSoba; i++) {
-			cenovnici[i] = new ArrayList<Cenovnik>();
-		}
+		cenovnici = new HashMap<TipSobe, ArrayList<Cenovnik>>();
 	}
 
 	public void dodajStavku(Stavka s) {
 		stavke.add(s);
 	}
-	public void dodajStavku(int id, String naziv, int idCenovnika, double cena) {
-		stavke.add(new Stavka(id, naziv, idCenovnika, cena));
+	public void dodajStavku(int id, DodatnaUsluga du) {
+		stavke.add(new Stavka(id, du));
 	}
-	public void dodajStavku(int id, String naziv, double cena) {
-		stavke.add(new Stavka(id, naziv, cena));
-	}
+	
 	//kreiranje cenovnika
-	public void kreirajCenovnik(int q, Cenovnik c){
-		cenovnici[q].add(c);
-	}
-	public void kreirajCenovnik(int q, int id, LocalDate poc) {
-		cenovnici[q].add(new Cenovnik(id, poc));
-	}
-	public void kreirajCenovnik(int q, int id, LocalDate poc, LocalDate kraj) {
-		cenovnici[q].add(new Cenovnik(id, poc, kraj));
-	}
-	//kreiranje cenovnika koji vazi za sve tipove sobe
-	public void kreirajCenovnik(Cenovnik c){
-		for(int i = 1; i <= brSoba; i++) {
-			cenovnici[i].add(c);
+	public void kreirajCenovnik(TipSobe q, Cenovnik c){
+		if(!cenovnici.containsKey(q)) {
+			cenovnici.put(q, new ArrayList<Cenovnik>());
 		}
+		cenovnici.get(q).add(c);
 	}
-	public void kreirajCenovnik(int id, LocalDate poc) {
-		for(int i = 1; i <= brSoba; i++) {
-			cenovnici[i].add(new Cenovnik(id, poc));
+	public void kreirajCenovnik(int id, TipSobe q, LocalDate poc) {
+		if(!cenovnici.containsKey(q)) {
+			cenovnici.put(q, new ArrayList<Cenovnik>());
+		}		
+		cenovnici.get(q).add(new Cenovnik(id, poc));
+	}
+	public void kreirajCenovnik(int id, TipSobe q, LocalDate poc, LocalDate kraj) {
+		if(!cenovnici.containsKey(q)) {
+			cenovnici.put(q, new ArrayList<Cenovnik>());
 		}
+		cenovnici.get(q).add(new Cenovnik(id, poc, kraj));
 	}
-	public void kreirajCenovnik(int id, LocalDate poc, LocalDate kraj) {
-		for (int i = 1; i <= brSoba; i++) {
-			cenovnici[i].add(new Cenovnik(id, poc, kraj));
+	public void kreirajCenovnik(List<TipSobe> tipovi, Cenovnik c) {
+		for (TipSobe t : tipovi) {
+			if(!cenovnici.containsKey(t)) {
+				cenovnici.put(t, new ArrayList<Cenovnik>());
+			}
+			cenovnici.get(t).add(c);
 		}
 	}
     //izmena cenovnika
@@ -75,8 +79,8 @@ public class ManagerCenovnik{
 	}
 	//geter za cenovnik
 	public Cenovnik getCenovnikById(int idCenovnika) {
-		for (int i = 1; i <= brSoba; i++) {
-			for (Cenovnik c : cenovnici[i]) {
+		for (ArrayList<Cenovnik> lista : cenovnici.values()) {
+			for (Cenovnik c : lista) {
 				if (c.getId() == idCenovnika) {
 					return c;
 				}
@@ -88,12 +92,65 @@ public class ManagerCenovnik{
 	public void setCenaForStavka(int idStavke, int idCenovnika, double cena) {
 		for (Stavka s : stavke) {
 			if (s.getId() == idStavke && s.getCenovnik() == idCenovnika) {
-				s.setCena(cena);
-				//break; 	nema break jer moze da se desi da se stavka nalazi u vise cenovnika
+				s.getDodatnaUsluga().setCena(cena);
 			}
+		}	
+	}
+	public boolean loadData(ManagerTipSobe mts, ManagerUsluga mdu) {
+		try {
+			BufferedReader br = new BufferedReader(new FileReader(filePath1));
+			String linija = null;
+			TipSobe q = null;
+			while ((linija = br.readLine()) != null) {
+				if(linija.equals("")) continue;
+				String[] tokeni = linija.split(",");
+				q = mts.getTipSobe(Integer.parseInt(tokeni[0]), tokeni[1]);
+				
+				LocalDate kraj = null;
+				if(!tokeni[4].equals("null")) kraj = LocalDate.parse(tokeni[4]);
+				
+				if(!cenovnici.containsKey(q)) {
+					cenovnici.put(q, new ArrayList<Cenovnik>());
+				}
+				cenovnici.get(q).add(new Cenovnik(Integer.parseInt(tokeni[2]), LocalDate.parse(tokeni[3]), kraj));
+			}
+			br.close();
+			br = new BufferedReader(new FileReader(filePath2));
+			DodatnaUsluga du = null;
+			while ((linija = br.readLine()) != null) {
+				if(linija.equals("")) continue;
+				String[] tokeni = linija.split(",");
+				du = mdu.getUslugaById(Integer.parseInt(tokeni[1]));
+				stavke.add(new Stavka(Integer.parseInt(tokeni[0]), du, Integer.parseInt(tokeni[2])));
+			}
+			
+		} catch (IOException e) {
+			return false;
 		}
-		
+		return true;
 	}
 	
-	
+	public boolean saveData() {
+		PrintWriter pw = null;
+		try {
+			pw = new PrintWriter(new FileWriter(filePath1, false));
+			String ispis = null;
+			for (HashMap.Entry<TipSobe, ArrayList<Cenovnik>> entry : cenovnici.entrySet()) {
+				ispis = entry.getKey().toFileString();
+				for (Cenovnik c : entry.getValue()) {
+					pw.println(ispis + "," + c.toFileString());
+				}
+			}
+			pw.close();
+			pw = new PrintWriter(new FileWriter(filePath2, false));
+			for (Stavka s : stavke) {
+				System.out.println("stavkice");
+				pw.println(s.toFileString());
+			}
+			pw.close();
+		} catch (IOException e) {
+			return false;
+		}
+		return true;
+	}
 }

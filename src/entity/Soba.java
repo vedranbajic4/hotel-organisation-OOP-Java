@@ -3,30 +3,27 @@ package entity;
 import enums.StatusSobe;
 
 public class Soba implements Comparable<Soba>{
-	private StatusSobe status;		//slobodna, spremanje, zauzeta...
-	private String raspored;		//3, 3+1, 2+1, 1+1, 2+2...
-	private int tipSobe;			//broj kreveta
+	private StatusSobe status = StatusSobe.SLOBODNA;		//slobodna, spremanje, zauzeta...
+	private int brojSobe;
+	private TipSobe tipSobe;
 	private int id;
 	
-	//konstruktori
-	public Soba() {}
-	public Soba(int id, int tipSobe, String raspored, StatusSobe status) {
+	public Soba() {
+	}
+	public Soba(int id, TipSobe tipSobe) {
+		this.id = id;
 		this.tipSobe = tipSobe;
-		this.raspored = raspored;
+	}
+	public Soba(int id, TipSobe tipSobe, int brojSobe) {
+		this.id = id;
+		this.tipSobe = tipSobe;
+		this.brojSobe = brojSobe;
+	}
+	public Soba(int id, TipSobe tipSobe, int brojSobe, StatusSobe status) {
+		this.id = id;
+		this.tipSobe = tipSobe;
+		this.brojSobe = brojSobe;
 		this.status = status;
-		this.id = id;
-	}
-	public Soba(int id, int tipSobe, String raspored) {
-		this.raspored = raspored;
-		this.tipSobe = tipSobe;
-		this.status = StatusSobe.SLOBODNA;
-		this.id = id;
-	}
-	public Soba(int id, int tipSobe) {
-		this.raspored = Integer.toString(tipSobe);
-		this.status = StatusSobe.SLOBODNA;
-		this.tipSobe = tipSobe;
-		this.id = id;
 	}
 	//metode
 	public void setStatus(StatusSobe status) {
@@ -39,20 +36,29 @@ public class Soba implements Comparable<Soba>{
 	public int getId() {
 		return this.id;
 	}
-	public void setRaspored(String raspored) {
-		this.raspored = raspored;
+	
+	public TipSobe getTipSobe() {
+		return this.tipSobe;
 	}
-	public void setRaspored(int tipSobe, String raspored) {
-		this.raspored = raspored;
-		this.tipSobe = tipSobe;
+	public void setTipSobe(TipSobe t) {
+		this.tipSobe = t;
+	}
+	public void setBrojSobe(int brojSobe) {
+		this.brojSobe = brojSobe;
+	}
+	public int getBrojSobe() {
+		return this.brojSobe;
 	}
 	
-	@Override
-	public String toString() {
-		return "Soba id: " + id + ", broj kreveta: " + tipSobe + ", raspored: " + raspored + ", status: " + status;
-	}
     @Override
 	public int compareTo(Soba s) {
-        return this.tipSobe - s.tipSobe;
+        return this.tipSobe.getBrojKreveta() - s.tipSobe.getBrojKreveta();
+    }
+    @Override
+	public String toString() {
+		return "Soba [id=" + id  + ", brojSobe=" + brojSobe + ", status=" + status + "]";
+	}
+    public String toFileString() {
+    	return id + "," + tipSobe.getBrojKreveta() + "," + tipSobe.getRaspored() + "," + brojSobe + "," + status;
     }
 }
