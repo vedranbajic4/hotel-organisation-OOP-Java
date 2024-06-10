@@ -26,6 +26,13 @@ public class Zaposleni extends Korisnik{
 		this.staz = staz;
 		this.strucnaSprema = strucnaSprema;
 	}
+	public Zaposleni(String ime, String prezime, Pol pol, LocalDate datumRodjenja, String telefon, String adresa,
+			String korisnickoIme, String lozinka, int plata, int staz, StrucnaSprema strucnaSprema) {
+		super(ime, prezime, pol, datumRodjenja, telefon, adresa, korisnickoIme, lozinka);
+		this.plata = plata;
+		this.staz = staz;
+		this.strucnaSprema = strucnaSprema;
+	}
 
 	public Zaposleni(int id, String ime, String prezime, int plata, int staz, StrucnaSprema strucnaSprema) {
 		super(id, ime, prezime);

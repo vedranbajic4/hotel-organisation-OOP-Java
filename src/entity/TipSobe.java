@@ -24,6 +24,6 @@ public class TipSobe {
 	}
 	@Override
 	public String toString() {
-		return "TipSobe [brojKreveta=" + brojKreveta + ", raspored=" + raspored + "]";
+		return "[brojKreveta=" + brojKreveta + ", raspored=" + raspored + "]";
 	}
 }

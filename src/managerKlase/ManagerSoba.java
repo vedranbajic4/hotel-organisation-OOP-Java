@@ -11,6 +11,7 @@ import java.util.List;
 
 import entity.Rezervacija;
 import entity.Soba;
+import entity.Sobarica;
 import entity.TipSobe;
 import enums.StatusSobe;
 
@@ -27,7 +28,10 @@ public class ManagerSoba {
 	public void dodajSobu(int id, TipSobe tipSobe, int brojSobe) {
 		lista.add(new Soba(id, tipSobe, brojSobe));
 	}
-
+	public void dodajSobu(TipSobe tipSobe, int brojSobe) {
+		lista.add(new Soba(tipSobe, brojSobe));
+	}
+	
 	public Soba getSobaById(int id) {
 		for (Soba s : lista) {
 			if (s.getId() == id) {
@@ -43,7 +47,10 @@ public class ManagerSoba {
 			System.out.println(s);
 		}
 	}
-	
+
+	public List<Soba> getSobe() {
+		return lista;
+	}
 	public void prikaziDostupneSobe(LocalDate d1, LocalDate d2, ManagerRezervacija mr) {
 		ArrayList<Soba> dostupneSobe = new ArrayList<>();
 		for (Soba s : lista) {
@@ -68,7 +75,7 @@ public class ManagerSoba {
 			System.out.println(s);
 		}
 	}
-	public boolean loadData(ManagerTipSobe mts) {
+	public boolean loadData(ManagerTipSobe mts, ManagerSobarica ms) {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(filePath));
 			String linija = null;
@@ -83,6 +90,8 @@ public class ManagerSoba {
 				rasString = tokeni[2];
 				
 				lista.add(new Soba(Integer.parseInt(tokeni[0]), mts.getTipSobe(brk, rasString), Integer.parseInt(tokeni[3]), status1));
+				if(tokeni[5].equals("-1")) continue; //nema sobarice za ciscenje soba
+				ms.getSobaricaById(Integer.parseInt(tokeni[5])).dodajSobu(lista.get(lista.size()-1));
 			}
 			br.close();
 		} catch (IOException e) {
@@ -91,12 +100,23 @@ public class ManagerSoba {
 		return true;
 	}
 	
-	public boolean saveData() {
+	public boolean saveData(ManagerSobarica ms) {
 		PrintWriter pw = null;
+		Sobarica sobarica = null;
 		try {
 			pw = new PrintWriter(new FileWriter(filePath, false));
 			for (Soba s: lista) {
-				pw.println(s.toFileString());
+				int id = -1;
+				for(Sobarica sb : ms.getSobarice()) {
+					for(Soba soba : sb.getSobeZaSpremanje()) {
+						if(soba.getId() == s.getId()) {
+                            id = sb.getId();
+                            break;
+                        }
+					}
+					if(id != -1) break;
+                }
+				pw.println(s.toFileString()+","+id);
 			}
 			pw.close();
 		} catch (IOException e) {

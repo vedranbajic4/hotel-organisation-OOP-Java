@@ -14,6 +14,8 @@ public abstract class Korisnik {
 	public String adresa;
 	public String korisnickoIme;
 	public String lozinka;
+	private static int id_gen = 1;
+
 	
 	public Korisnik() {}
 	
@@ -21,8 +23,9 @@ public abstract class Korisnik {
 		this.id = id;
 		this.ime = ime;
 		this.prezime = prezime;
+		if(id_gen <= id) id_gen = id + 1;
 	}
-
+	
 	public Korisnik(int id, String ime, String prezime, Pol pol, LocalDate datumRodjenja, String telefon, String adresa,
 			String korisnickoIme, String lozinka) {
 		this.id = id;
@@ -34,13 +37,65 @@ public abstract class Korisnik {
 		this.adresa = adresa;
 		this.korisnickoIme = korisnickoIme;
 		this.lozinka = lozinka;
+		if(id_gen <= id) id_gen = id + 1;
 	}
+	
+	public Korisnik(String ime, String prezime, Pol pol, LocalDate datumRodjenja, String telefon, String adresa,
+			String korisnickoIme, String lozinka) {
+		this.id = id_gen++;
+		this.ime = ime;
+		this.prezime = prezime;
+		this.pol = pol;
+		this.datumRodjenja = datumRodjenja;
+		this.telefon = telefon;
+		this.adresa = adresa;
+		this.korisnickoIme = korisnickoIme;
+		this.lozinka = lozinka;
+		if(id_gen <= id) id_gen = id + 1;
+	}
+	
 	public int getId() {
 		return id;
+	}
+	public String getKorisnickoIme() {
+		return this.korisnickoIme;
+	}
+
+	public String getIme() {
+		return this.ime;
+	}
+	public String getPrezime() {
+		return this.prezime;
 	}
 	public boolean postojiKorisnik(String korisnickoIme, String lozinka) {
 		return this.korisnickoIme.equals(korisnickoIme) && this.lozinka.equals(lozinka);
 	}
+	public boolean postojiKorisnik(String korisnickoIme) {
+		return this.korisnickoIme.equals(korisnickoIme);
+	}
+
+	
+	public void setPrezime(String prezime) {
+		this.prezime = prezime;
+	}
+
+	public void setAdresa(String adresa) {
+		this.adresa = adresa;
+	}
+
+	public void setTelefon(String telefon) {
+		this.telefon = telefon;
+	}
+
+	public void setLozinka(String lozinka) {
+		this.lozinka = lozinka;
+	}
+
+	public void setKorisnickoIme(String korisnickoIme) {
+		this.korisnickoIme = korisnickoIme;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "Korisnik [id=" + id + " ime=" + ime + ", prezime=" + prezime + ", pol=" + pol + ", datumRodjenja=" + datumRodjenja

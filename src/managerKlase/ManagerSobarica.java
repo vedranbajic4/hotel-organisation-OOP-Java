@@ -9,8 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import entity.Administrator;
-import entity.Recepcioner;
+import entity.Soba;
 import entity.Sobarica;
 import enums.Pol;
 import enums.StrucnaSprema;
@@ -34,6 +33,11 @@ public class ManagerSobarica {
 			String korisnickoIme, String lozinka, int plata, int staz, StrucnaSprema strucnaSprema) {
 		lista.add(new Sobarica(id, ime, prezime, pol, datumRodjenja, telefon, adresa, korisnickoIme, lozinka, plata, staz, strucnaSprema));
 	}
+	public void dodajSobaricu(String ime, String prezime, Pol pol, LocalDate datumRodjenja, String telefon, String adresa,
+			String korisnickoIme, String lozinka, int plata, int staz, StrucnaSprema strucnaSprema) {
+		lista.add(new Sobarica(ime, prezime, pol, datumRodjenja, telefon, adresa, korisnickoIme, lozinka, plata, staz, strucnaSprema));
+	}
+	
 	public Sobarica getSobaricaById(int id) {
 		for (Sobarica s : lista) {
 			if (s.getId() == id) {
@@ -41,6 +45,10 @@ public class ManagerSobarica {
 			}
 		}
 		return null;
+	}
+
+	public List<Sobarica> getSobarice() {
+		return lista;
 	}
 	//uklanjanje sobarice
 	public void ukloniSobaricu(int id) {
@@ -63,6 +71,27 @@ public class ManagerSobarica {
 			}
 		}
 		return null;
+	}
+	public Sobarica getSobaricaByKorisnickoIme(String korisnickoIme) {
+		for (Sobarica s : lista) {
+			if (s.getKorisnickoIme().equals(korisnickoIme)) {
+				return s;
+			}
+		}
+		return null;
+	}
+	public void dodeliSobu(Soba s) {
+		int minSoba = 100000;
+		Sobarica sobarica = null;
+		for (Sobarica sb : lista) {
+			if (sb.brojSobaZaSpremanje() < minSoba) {
+				minSoba = sb.brojSobaZaSpremanje();
+				sobarica = sb;
+				//System.out.println("minsoba == " + minSoba);
+			}
+		}
+		//System.out.println("dodeljeno sobarici == " + sobarica);
+		sobarica.dodajSobu(s);
 	}
 	public boolean loadData() {
 		try {

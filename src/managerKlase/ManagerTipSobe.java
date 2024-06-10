@@ -8,9 +8,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import entity.Soba;
 import entity.TipSobe;
-import enums.StatusSobe;
 
 public class ManagerTipSobe {
 	private List<TipSobe> lista;

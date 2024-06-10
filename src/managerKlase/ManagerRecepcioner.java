@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 import entity.Recepcioner;
 import enums.Pol;
+import enums.StrucnaSprema;
 
 public class ManagerRecepcioner {
 	ArrayList<Recepcioner> lista;
@@ -26,7 +27,11 @@ public class ManagerRecepcioner {
 			String korisnickoIme, String lozinka) {
 		lista.add(new Recepcioner(id, ime, prezime, pol, datumRodjenja, telefon, adresa, korisnickoIme, lozinka));
 	}
-
+	public void dodajRecepcionera(String ime, String prezime, Pol pol, LocalDate datumRodjenja, String telefon,
+			String adresa, String korisnickoIme, String lozinka, int plata, int staz, StrucnaSprema strucnaSprema) {
+		lista.add(new Recepcioner(ime, prezime, pol, datumRodjenja, telefon, adresa, korisnickoIme, lozinka, plata, staz, strucnaSprema));
+	}
+	
 	public Recepcioner getRecepcionerById(int id) {
 		for (Recepcioner r : lista) {
 			if (r.getId() == id) {
@@ -34,6 +39,18 @@ public class ManagerRecepcioner {
 			}
 		}
 		return null;
+	}
+
+	public Recepcioner getRecepcionerByKorisnickoIme(String korisnickoIme) {
+		for (Recepcioner r : lista) {
+			if (r.getKorisnickoIme().equals(korisnickoIme)) {
+				return r;
+			}
+		}
+		return null;
+	}
+	public ArrayList<Recepcioner> getRecepcioneri() {
+		return lista;
 	}
 	//uklanjanje recepcionera
 	public void ukloniRecepcionera(int id) {

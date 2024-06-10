@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import enums.Pol;
+import enums.StatusRezervacije;
 import managerKlase.ManagerRezervacija;
 
 public class Gost extends Korisnik{
@@ -33,13 +34,36 @@ public class Gost extends Korisnik{
 		}
 	}
 
+	public List<Rezervacija> getRezervacije() {
+		return rezervacije;
+	}
+	public Soba postojiSobaZaCheckOut() {
+		Soba ret = null;
+		for (Rezervacija r : rezervacije) {
+			if (r.getStatus() == StatusRezervacije.POTVRDJENA && r.getSoba() != null) {
+				ret = r.getSoba();
+				break;
+			}
+		}
+		return ret;
+	}
+	public Rezervacija postojiRezervacijaZaCheckOut() {
+		Rezervacija ret = null;
+		for (Rezervacija r : rezervacije) {
+			if (r.getStatus() == StatusRezervacije.POTVRDJENA && r.getSoba() != null) {
+				ret = r;
+				break;
+			}
+		}
+		return ret;
+	}
 	public void zahtevRezervacije(Rezervacija r, ManagerRezervacija mr) {
 		mr.dodajRezervaciju(r);
 		rezervacije.add(r);
 	}
-	public void zahtevRezervacije(int id, TipSobe tipSobe, LocalDate datumDolaska, LocalDate datumOdlaska, ManagerRezervacija mr) {
-		mr.dodajRezervaciju(id, tipSobe, datumDolaska, datumOdlaska);
-		rezervacije.add(new Rezervacija(id, tipSobe, datumDolaska, datumOdlaska));
+	public void zahtevRezervacije(TipSobe tipSobe, LocalDate datumDolaska, LocalDate datumOdlaska, ManagerRezervacija mr) {
+		mr.dodajRezervaciju(tipSobe, datumDolaska, datumOdlaska);
+		rezervacije.add(new Rezervacija(tipSobe, datumDolaska, datumOdlaska));
 	}
 	public void zahtevRezervacije(int id, TipSobe tipSobe, LocalDate datumDolaska, LocalDate datumOdlaska,
 			ArrayList<DodatnaUsluga> usluge, ManagerRezervacija mr) {

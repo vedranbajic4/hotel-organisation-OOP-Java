@@ -9,11 +9,8 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import entity.Administrator;
 import entity.Gost;
-import entity.Recepcioner;
 import enums.Pol;
-import enums.StrucnaSprema;
 
 public class ManagerGost {
 	List<Gost> lista;
@@ -39,6 +36,9 @@ public class ManagerGost {
 		}
 		return null;
 	}
+	public List<Gost> getGosti() {
+		return lista;
+	}
 	public void prikaziSveGoste() {
 		System.out.println("Svi gosti u sistemu su: ");
 		for (Gost g : lista) {
@@ -48,6 +48,14 @@ public class ManagerGost {
 	public Gost postojiKorisnik(String korisnickoIme, String lozinka) {
 		for (Gost g : lista) {
 			if (g.postojiKorisnik(korisnickoIme, lozinka)) {
+				return g;
+			}
+		}
+		return null;
+	}
+	public Gost postojiKorisnik(String korisnickoIme) {
+		for (Gost g : lista) {
+			if (g.postojiKorisnik(korisnickoIme)) {
 				return g;
 			}
 		}

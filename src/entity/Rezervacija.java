@@ -8,36 +8,41 @@ import enums.StatusRezervacije;
 
 public class Rezervacija {
 	private int id;
-	private StatusRezervacije status;	//status (Na cekanju, Potvrdjena...)
-	private TipSobe tipSobe;			//tip sobe koju gost zeli
-	private Soba soba;					//soba koja je dodeljena gostu
+	private StatusRezervacije status;		//status (Na cekanju, Potvrdjena...)
+	private TipSobe tipSobe;				//tip sobe koju gost zeli
+	private Soba soba = null;				//soba koja je dodeljena gostu
 	private LocalDate datumDolaska;
 	private LocalDate datumOdlaska;
 	private List<DodatnaUsluga> usluge;		//usluge koje gost zeli 
+	private float cena = 0;					//cena rezervacije
+	private static int ID_GENERATOR = 1;
 	
 	//konstruktori
 	public Rezervacija() {
+		this.id = ID_GENERATOR++;
 		this.usluge = new ArrayList<DodatnaUsluga>();
 	}
-
-	public Rezervacija(int id, StatusRezervacije status, TipSobe tipSobe, Soba soba, LocalDate datumDolaska, LocalDate datumOdlaska) {
-        this.id = id;
+	public Rezervacija(TipSobe tipSobe, LocalDate datumDolaska, LocalDate datumOdlaska) {
+		this.id = ID_GENERATOR++;
+		this.status = StatusRezervacije.NACEKANJU;
+		this.tipSobe = tipSobe;
+		this.datumDolaska = datumDolaska;
+		this.datumOdlaska = datumOdlaska;
+		this.usluge = new ArrayList<DodatnaUsluga>();
+	}
+	public Rezervacija(int id, StatusRezervacije status, TipSobe tipSobe, Soba soba, LocalDate datumDolaska, LocalDate datumOdlaska, float cena) {
+		if(id >= ID_GENERATOR) ID_GENERATOR = id+1;
+		this.id = id;
         this.status = status;
         this.tipSobe = tipSobe;
         this.soba = soba;
         this.datumDolaska = datumDolaska;
         this.datumOdlaska = datumOdlaska;
         this.usluge = new ArrayList<DodatnaUsluga>();
-    }
-	public Rezervacija(int id, TipSobe tipSobe, LocalDate datumDolaska, LocalDate datumOdlaska) {
-        this.id = id;
-		this.status = StatusRezervacije.NACEKANJU;
-        this.tipSobe = tipSobe;
-        this.datumDolaska = datumDolaska;
-        this.datumOdlaska = datumOdlaska;
-        this.usluge = new ArrayList<DodatnaUsluga>();
+        this.cena = cena;
     }
 	public Rezervacija(int id, TipSobe tipSobe, LocalDate datumDolaska, LocalDate datumOdlaska, ArrayList<DodatnaUsluga> usluge) {
+		if(id >= ID_GENERATOR) ID_GENERATOR = id+1;
 		this.id = id;
 		this.status = StatusRezervacije.NACEKANJU;
         this.tipSobe = tipSobe;
@@ -45,12 +50,18 @@ public class Rezervacija {
         this.datumOdlaska = datumOdlaska;
         this.usluge = usluge;
     }
-
+	
 	//geteri i seteri
+	public float getUkupnaCena() {
+		return this.cena;
+	}
 	public LocalDate getDatumDolaska() {
 		return datumDolaska;
 	}
 
+	public TipSobe getTipSobe() {
+		return tipSobe;
+	}
 	public LocalDate getDatumOdlaska() {
 		return datumOdlaska;
 	}
@@ -76,8 +87,34 @@ public class Rezervacija {
 		return this.usluge;
 	}
 
+	public void setUsluge(List<DodatnaUsluga> usluge) {
+		this.usluge = usluge;
+	}
+	
 	public int getId() {
 		return id;
+	}
+
+	public float getCena() {
+		return cena;
+	}
+	public void addCena(float kes) {
+		this.cena += kes;
+	}
+	public void setCena(float kes) {
+		this.cena = kes;
+	}
+
+	public void setDatumDolaska(LocalDate datumDolaska) {
+		this.datumDolaska = datumDolaska;
+	}
+
+	public void setDatumOdlaska(LocalDate datumOdlaska) {
+		this.datumOdlaska = datumOdlaska;
+	}
+
+	public void setTipSobe(TipSobe tipSobe) {
+		this.tipSobe = tipSobe;
 	}
 	@Override 
 	public String toString() {
@@ -87,7 +124,12 @@ public class Rezervacija {
 	
 	public String toFileString() {
 		int sobaId = -1;
-		if(soba != null) sobaId = soba.getId();
-		return (id+","+status+","+tipSobe.getBrojKreveta()+"," +tipSobe.getRaspored()+","+sobaId+","+datumDolaska+","+datumOdlaska);
+		if(this.soba != null) sobaId = this.soba.getId();
+		return (id+","+status+","+tipSobe.getBrojKreveta()+"," +tipSobe.getRaspored()+","+sobaId+","+datumDolaska+","+datumOdlaska+","+cena);
+	}
+
+	public String smallString() {
+		return id + ", " + tipSobe + ", od "
+				+ datumDolaska + ", do " + datumOdlaska;
 	}
 }
