@@ -18,7 +18,7 @@ public class ManagerFactory {
 		this.ms = new ManagerSobarica();
 		this.mc = new ManagerCenovnik();
 		this.msoba = new ManagerSoba();
-		this.mrez = new ManagerRezervacija();
+		this.mrez = new ManagerRezervacija(this.mc);
 		this.mts = new ManagerTipSobe();
 		this.mu = new ManagerUsluga();
 	}
@@ -52,15 +52,15 @@ public class ManagerFactory {
 	}
 	
 	public void loadData() {
-		ma.loadData();					//admin
-		ms.loadData();					//sobarica
-		mg.loadData();					//gost
-		mr.loadData();					//recepcioner
-		mts.loadData();					//tipSobe
-		msoba.loadData(mts);			//soba
-		mu.loadData();					//usluge
-		mrez.loadData(msoba, mts, mu);	//rezervacije
-		mc.loadData(mts, mu);			//cenovnik
+		ma.loadData();						//admin
+		ms.loadData();						//sobarica
+		mg.loadData();						//gost
+		mr.loadData();						//recepcioner
+		mts.loadData();						//tipSobe
+		msoba.loadData(mts, ms);				//soba
+		mu.loadData();						//usluge
+		mrez.loadData(msoba, mts, mu, mg);	//rezervacije
+		mc.loadData(mts, mu);				//cenovnik
 	}
 	public void saveData() {
 		ma.saveData();			//admin
@@ -68,9 +68,9 @@ public class ManagerFactory {
 		mg.saveData();			//gost
 		mr.saveData();			//recepcioner
 		mts.saveData();			//tipSobe
-		msoba.saveData();		//soba
+		msoba.saveData(ms);		//soba
 		mu.saveData();			//usluge
-		mrez.saveData();		//rezervacije
+		mrez.saveData(mg);		//rezervacije
 		mc.saveData();			//cenovnik
 	}
 }

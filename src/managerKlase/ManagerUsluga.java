@@ -39,6 +39,22 @@ public class ManagerUsluga {
 			}
 		}
 	}
+	public List<DodatnaUsluga> getUslugeBezPostojecih(List<DodatnaUsluga> ul){
+		List<DodatnaUsluga> ret = new ArrayList<DodatnaUsluga>();
+		for (DodatnaUsluga du : usluge) {
+			boolean postoji = false;
+			for (DodatnaUsluga du1 : ul) {
+				if (du.equals(du1)) {
+					postoji = true;
+					break;
+				}
+			}
+			if (!postoji) {
+				ret.add(du);
+			}
+		}
+		return ret;
+	}
 	public void ukloniUslugu(String naziv) {
 		System.out.println("Uklanjam uslugu po nazivu");
 		for (DodatnaUsluga du : usluge) {
@@ -65,7 +81,7 @@ public class ManagerUsluga {
 			while ((linija = br.readLine()) != null) {
 				if(linija.equals("")) continue;
 				String[] tokeni = linija.split(",");
-				usluge.add(new DodatnaUsluga(Integer.parseInt(tokeni[0]), tokeni[1], Double.parseDouble(tokeni[2])));
+				usluge.add(new DodatnaUsluga(Integer.parseInt(tokeni[0]), tokeni[1]));
 			}
 			br.close();
 		} catch (IOException e) {

@@ -1,14 +1,7 @@
 package main;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-
-import entity.Cenovnik;
-import entity.TipSobe;
-import entity.DodatnaUsluga;
-
 import managerKlase.ManagerFactory;
-import utils.Pregled;
+import Gui.MainFrame;
 
 public class Hotel {
 	public static void main(String[] args) {
@@ -17,8 +10,8 @@ public class Hotel {
 		ManagerFactory mf = new ManagerFactory();
 		mf.loadData();
 		
+		new MainFrame(mf);
 		
-		
-		mf.saveData();
+		//mf.saveData();
 	}
 }

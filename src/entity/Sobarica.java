@@ -1,5 +1,10 @@
 package entity;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +14,7 @@ import enums.StatusSobe;
 import enums.StrucnaSprema;
 
 public class Sobarica extends Zaposleni{
-	List<Soba> sobeZaSpremanje;
+	List<Soba> sobeZaSpremanje = new ArrayList<Soba>();
 	
 	public Sobarica() {
 		sobeZaSpremanje = new ArrayList<Soba>();
@@ -28,13 +33,34 @@ public class Sobarica extends Zaposleni{
 			String korisnickoIme, String lozinka, int plata, int staz, StrucnaSprema strucnaSprema) {
 		super(id, ime, prezime, pol, datumRodjenja, telefon, adresa, korisnickoIme, lozinka, plata, staz,
 				strucnaSprema);
-		sobeZaSpremanje = new ArrayList<Soba>();
 	}
+	public Sobarica(String ime, String prezime, Pol pol, LocalDate datumRodjenja, String telefon, String adresa,
+			String korisnickoIme, String lozinka, int plata, int staz, StrucnaSprema strucnaSprema) {
+		super(ime, prezime, pol, datumRodjenja, telefon, adresa, korisnickoIme, lozinka, plata, staz,
+				strucnaSprema);
+	}
+
 	
+	public List<Soba> getSobeZaSpremanje() {
+		return sobeZaSpremanje;
+	}
+
+	
+	public int brojSobaZaSpremanje() {
+		return this.sobeZaSpremanje.size();
+	}
 	public void dodajSobu(Soba s) {
 		sobeZaSpremanje.add(s);
 	}
 	public void spremiSobu(Soba s) {
+		try {
+			PrintWriter pw = new PrintWriter(new FileWriter("data/sobarica_spremanje.csv", true));
+			pw.println(this.getId()+","+s.getId()+","+LocalDate.now());
+			pw.close();
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
 		sobeZaSpremanje.remove(s);
 		s.setStatus(StatusSobe.SLOBODNA);
 	}

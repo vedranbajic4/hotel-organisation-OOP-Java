@@ -36,6 +36,9 @@ public class ManagerAdmin {
 		}
 	}
 
+	public List<Administrator> getAdmini() {
+		return lista;
+	}
 	public Administrator postojiKorisnik(String korisnickoIme, String lozinka) {
 		for (Administrator a : lista) {
 			if (a.postojiKorisnik(korisnickoIme, lozinka)) {

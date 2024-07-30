@@ -7,23 +7,33 @@ public class Soba implements Comparable<Soba>{
 	private int brojSobe;
 	private TipSobe tipSobe;
 	private int id;
+	private static int ID_GEN = 1;
 	
 	public Soba() {
 	}
 	public Soba(int id, TipSobe tipSobe) {
 		this.id = id;
 		this.tipSobe = tipSobe;
+		if (id >= ID_GEN) ID_GEN = id + 1;
 	}
 	public Soba(int id, TipSobe tipSobe, int brojSobe) {
 		this.id = id;
 		this.tipSobe = tipSobe;
 		this.brojSobe = brojSobe;
+		if (id >= ID_GEN) ID_GEN = id + 1;
 	}
 	public Soba(int id, TipSobe tipSobe, int brojSobe, StatusSobe status) {
 		this.id = id;
 		this.tipSobe = tipSobe;
 		this.brojSobe = brojSobe;
 		this.status = status;
+		if (id >= ID_GEN) ID_GEN = id + 1;
+	}
+
+	public Soba(TipSobe tipSobe, int brojSobe) {
+		this.id = ID_GEN++;
+		this.tipSobe = tipSobe;
+		this.brojSobe = brojSobe;
 	}
 	//metode
 	public void setStatus(StatusSobe status) {
@@ -60,5 +70,8 @@ public class Soba implements Comparable<Soba>{
 	}
     public String toFileString() {
     	return id + "," + tipSobe.getBrojKreveta() + "," + tipSobe.getRaspored() + "," + brojSobe + "," + status;
+    }
+    public String[] forTable() {
+    	return new String[] {Integer.toString(id), Integer.toString(brojSobe), tipSobe.getBrojKreveta() + "", tipSobe.getRaspored(), status.toString()};
     }
 }

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.swing.ListModel;
+
 import entity.Cenovnik;
 import entity.DodatnaUsluga;
 import entity.Stavka;
@@ -32,7 +34,13 @@ public class ManagerCenovnik{
 	public void dodajStavku(int id, DodatnaUsluga du) {
 		stavke.add(new Stavka(id, du));
 	}
-	
+	public void dodajStavku(int id, DodatnaUsluga du, int idCenovnika, float cena) {
+		stavke.add(new Stavka(id, du, idCenovnika, cena));
+	}
+
+	public void dodajStavku(DodatnaUsluga du, int idCenovnika, float cena) {
+		stavke.add(new Stavka(du, idCenovnika, cena));
+	}
 	//kreiranje cenovnika
 	public void kreirajCenovnik(TipSobe q, Cenovnik c){
 		if(!cenovnici.containsKey(q)) {
@@ -69,6 +77,14 @@ public class ManagerCenovnik{
 			}
 		}
 	}
+	public boolean dodatnaUslugaNaCenovniku(int iddu, int idc) {
+		for (Stavka s : stavke) {
+			if (s.getDodatnaUsluga().getId() == iddu && s.getCenovnik() == idc) {
+				return true;
+			}
+		}
+		return false;
+	}
 	public void dodajStavkuNaCenovnik(int idCenovnika, int idStavke) {
 		for(Stavka s : stavke) {
 			if (s.getId() == idStavke) {
@@ -88,14 +104,82 @@ public class ManagerCenovnik{
 		}
 		return null;
 	}
+	public boolean isOnCenovnik(int idDodatneUsluge, int idCenovnika) {
+		for (Stavka s : stavke) {
+			if (s.getDodatnaUsluga().getId() == idDodatneUsluge && s.getCenovnik() == idCenovnika) {
+				return true;
+			}
+		}
+		return false;
+	}
+	public List<Cenovnik> getCenovnikByTipSobe(TipSobe q) {
+		//System.out.println(q.getRaspored() + " " + q.getBrojKreveta());
+		return cenovnici.get(q);
+	}
+
+	public HashMap<TipSobe, ArrayList<Cenovnik>> getCenovnici() {
+		return this.cenovnici;
+	}
+
+	public void ukloniCenovnik(int id) {
+		for (Stavka s : stavke) {
+			if (s.getCenovnik() == id) {
+				stavke.remove(s);
+			}
+		}
+		for (ArrayList<Cenovnik> lista : cenovnici.values()) {
+			for (Cenovnik c : lista) {
+				if (c.getId() == id) {
+					lista.remove(c);
+					break;
+				}
+			}
+		}
+	}
+	public List<Stavka> getStavkeByCenovnik(int id){
+		List<Stavka> ret = new ArrayList<Stavka>();
+		for (Stavka s : stavke) {
+			if (s.getCenovnik() == id) {
+				ret.add(s);
+			}
+		}
+		return ret;
+	}
+	public float getCena(int idDodatneUsluge, int idCenovnika) {
+		for (Stavka s : stavke) {
+			if (s.getDodatnaUsluga().getId() == idDodatneUsluge && s.getCenovnik() == idCenovnika) {
+				return s.getCena();
+			}
+		}
+		return -1;
+	}
+	public void removeStavka(int idUsluge, int idCenovnika) {
+		for (Stavka s : stavke) {
+			if (s.getDodatnaUsluga().getId() == idUsluge && s.getCenovnik() == idCenovnika) {
+				stavke.remove(s);
+				break;
+			}
+		}
+	}
+	
 	//seter za cenu stavke
-	public void setCenaForStavka(int idStavke, int idCenovnika, double cena) {
+	public void setCenaForStavka(int idStavke, int idCenovnika, float cena) {
 		for (Stavka s : stavke) {
 			if (s.getId() == idStavke && s.getCenovnik() == idCenovnika) {
-				s.getDodatnaUsluga().setCena(cena);
+				s.setCena(cena);
 			}
-		}	
+		}
 	}
+	public void setCenaForUsluga(DodatnaUsluga usluga, int idCenovnika, float cena) {
+		for (Stavka s : stavke) {
+			if (s.getDodatnaUsluga() == usluga && s.getCenovnik() == idCenovnika) {
+				s.setCena(cena);
+				return;
+			}
+		}
+		stavke.add(new Stavka(usluga, idCenovnika, cena));
+	}
+
 	public boolean loadData(ManagerTipSobe mts, ManagerUsluga mdu) {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(filePath1));
@@ -121,7 +205,7 @@ public class ManagerCenovnik{
 				if(linija.equals("")) continue;
 				String[] tokeni = linija.split(",");
 				du = mdu.getUslugaById(Integer.parseInt(tokeni[1]));
-				stavke.add(new Stavka(Integer.parseInt(tokeni[0]), du, Integer.parseInt(tokeni[2])));
+				stavke.add(new Stavka(Integer.parseInt(tokeni[0]), du, Integer.parseInt(tokeni[2]), Float.parseFloat(tokeni[3])));
 			}
 			
 		} catch (IOException e) {
@@ -129,7 +213,6 @@ public class ManagerCenovnik{
 		}
 		return true;
 	}
-	
 	public boolean saveData() {
 		PrintWriter pw = null;
 		try {
@@ -144,7 +227,7 @@ public class ManagerCenovnik{
 			pw.close();
 			pw = new PrintWriter(new FileWriter(filePath2, false));
 			for (Stavka s : stavke) {
-				System.out.println("stavkice");
+				//System.out.println("stavkice");
 				pw.println(s.toFileString());
 			}
 			pw.close();

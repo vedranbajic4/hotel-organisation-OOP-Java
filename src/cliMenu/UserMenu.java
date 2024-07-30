@@ -14,40 +14,46 @@ public class UserMenu {
 		while(true) {
 			System.out.println("\nDobrodošli u hotel!");
 			System.out.println("1. Ulogujte se");
-			System.out.println("2. Registrujte se");
-			System.out.println("3. Izlaz");
+			//System.out.println("2. Registrujte se");
+			System.out.println("2. Izlaz");
 			System.out.print("Izaberite opciju: ");
 			Scanner scanner = new Scanner(System.in);
 			String opcija = scanner.nextLine();
 			if(opcija.equals("1")) {
-				System.out.println("___________\nUlogujte se, unesite korisnicko ime: ");
+				System.out.print("___________\nUlogujte se, unesite korisnicko ime: ");
 				String korisnickoIme = scanner.nextLine();
-				System.out.println("Unesite lozinku: ");
+				System.out.print("Unesite lozinku: ");
 				String lozinka = scanner.nextLine();
 				
+				//admin
 				if(mf.getMA().postojiKorisnik(korisnickoIme, lozinka) != null) {
                     System.out.println("Uspesno ste se ulogovali kao administrator");
+                    AdminMenu am = new AdminMenu(mf, mf.getMA().postojiKorisnik(korisnickoIme, lozinka));
+                    am.showMenu();
 				}
+				//gost
 				else if (mf.getMG().postojiKorisnik(korisnickoIme, lozinka) != null) {
 					System.out.println("Uspesno ste se ulogovali kao gost");
 					GostMenu gm = new GostMenu(mf, mf.getMG().postojiKorisnik(korisnickoIme, lozinka));
 					gm.showMenu();
-					System.out.println("Uspesno ste se izlogovali kao gost\n\n");
-					
-				}  
-				else if (mf.getMG().postojiKorisnik(korisnickoIme, lozinka) != null){
-					System.out.println("Uspesno ste se ulogovali kao gost");
 				}
+				//recepcioner
+				else if (mf.getMR().postojiKorisnik(korisnickoIme, lozinka) != null){
+					System.out.println("Uspesno ste se ulogovali kao recepcioner");
+					RecepcionerMenu rm = new RecepcionerMenu(mf, mf.getMR().postojiKorisnik(korisnickoIme, lozinka));
+					rm.showMenu();
+				}
+				//sobarica
 				else if (mf.getMS().postojiKorisnik(korisnickoIme, lozinka) != null) {
                     System.out.println("Uspesno ste se ulogovali kao sobarica");
+                    SobaricaMenu sm = new SobaricaMenu(mf, mf.getMS().postojiKorisnik(korisnickoIme, lozinka));
+                    sm.showMenu();
                 }
                 else {
                     System.out.println("Neuspesno logovanje, pokusajte ponovo");
                 }
 			}
 			else if (opcija.equals("2")) {
-				System.out.println("Registrujte se");
-			} else if (opcija.equals("3")) {
 				System.out.println("Izlaz");
 				return;
 			} else {
