@@ -1,14 +1,19 @@
 package filter;
 
+<<<<<<< HEAD
 import java.awt.print.Printable;
 import java.time.LocalDate;
 import java.time.YearMonth;
+=======
+import java.time.LocalDate;
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.plaf.synth.SynthScrollPaneUI;
 
 import entity.Gost;
+<<<<<<< HEAD
 import entity.Recepcioner;
 import entity.Rezervacija;
 import entity.Soba;
@@ -17,6 +22,12 @@ import entity.TipSobe;
 import entity.Zaposleni;
 import enums.StatusRezervacije;
 import enums.StatusSobe;
+=======
+import entity.Rezervacija;
+import entity.Soba;
+import entity.TipSobe;
+import enums.StatusRezervacije;
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 import managerKlase.ManagerFactory;
 
 public class Filter {
@@ -67,7 +78,10 @@ public class Filter {
 		List<Soba> ret = new ArrayList<Soba>();
 		for(Soba s: mf.getMSoba().getSobe()) {
 			if (!s.getTipSobe().equals(tipSobe)) continue;
+<<<<<<< HEAD
 			//if (s.getStatus() == StatusSobe.ZAUZETA) continue;
+=======
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 			//odgovarajuci tip sobe
 			boolean moze = true;
 			for(Rezervacija r: mf.getMRez().getRezervacije()) {
@@ -94,6 +108,7 @@ public class Filter {
 		}
 		return ret;
 	}
+<<<<<<< HEAD
 	public List<Soba> getSlobodneSobe() {
 		List<Soba> ret = new ArrayList<Soba>();
         for(Soba s: mf.getMSoba().getSobe()) {
@@ -102,6 +117,9 @@ public class Filter {
         }
         return ret;
 	}
+=======
+	
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 	public List<Rezervacija> getRezervacijeZaOtkaz(Gost g){
 		ArrayList<Rezervacija> ret = new ArrayList<Rezervacija>();
 		for (Rezervacija r : g.getRezervacije()) {
@@ -109,6 +127,7 @@ public class Filter {
 				ret.add(r);
 			}
 		}
+<<<<<<< HEAD
 		return ret;
 	}
 	public List<Zaposleni> getZaposleni(){
@@ -138,6 +157,9 @@ public class Filter {
 				ret += r.getCena();
 			}
 		}
+=======
+		
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 		return ret;
 	}
 }

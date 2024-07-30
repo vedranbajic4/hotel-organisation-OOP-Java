@@ -90,9 +90,15 @@ public class ManagerSobarica {
 				//System.out.println("minsoba == " + minSoba);
 			}
 		}
+<<<<<<< HEAD
 		sobarica.dodajSobu(s);
 	}
 	
+=======
+		//System.out.println("dodeljeno sobarici == " + sobarica);
+		sobarica.dodajSobu(s);
+	}
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 	public boolean loadData() {
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(filePath));

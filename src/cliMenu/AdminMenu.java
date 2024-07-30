@@ -505,6 +505,10 @@ public class AdminMenu {
             Soba s = sobe.get(brojSobe);
             
             while(true) {
+<<<<<<< HEAD
+=======
+            	
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
                 System.out.println("\n  1. Promeni tip sobe");
                 System.out.println("  2. Promeni broj sobe");
                 System.out.println("  3. Kraj");
@@ -521,7 +525,11 @@ public class AdminMenu {
             }
 		}
 	}
+<<<<<<< HEAD
 	private boolean proveriSobu(TipSobe tipSobe, int brojSobe) {
+=======
+	private boolean proveriSobu(TipSobe tipSobe, int brojSobe) {	//radi
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 		for (Soba s : mf.getMSoba().getSobe()) {
 			if (s.getTipSobe().equals(tipSobe) && s.getBrojSobe() == brojSobe) {
 				return true;
@@ -529,7 +537,11 @@ public class AdminMenu {
 		}
 		return false;
 	}
+<<<<<<< HEAD
 	private void dodavanjeSobe() {
+=======
+	private void dodavanjeSobe() {	//radi
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 		System.out.println("  Dodavanje sobe");
 		Scanner scanner = new Scanner(System.in);
 		TipSobe tipSobe = null;
@@ -569,7 +581,11 @@ public class AdminMenu {
 		System.out.println("  Uspesno dodata soba " + tipSobe + " broj " + brojSobe);
 		mf.getMSoba().dodajSobu(tipSobe, brojSobe);
 	}
+<<<<<<< HEAD
 	private boolean rasporedOdgovara(int brojKreveta, String raspored) {
+=======
+	private boolean rasporedOdgovara(int brojKreveta, String raspored) {	//radi
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 		boolean ret = true;
 		int suma = 0;
 		String tokeni[] = raspored.split("\\+");
@@ -588,7 +604,11 @@ public class AdminMenu {
 			ret = false;
 		return ret;
 	}
+<<<<<<< HEAD
 	boolean postojiTipSobe(int brojKreveta, String raspored) {
+=======
+	boolean postojiTipSobe(int brojKreveta, String raspored) {	//radi
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 		for (TipSobe ts : mf.getMTS().getTipoviSoba()) {
 			if (ts.getBrojKreveta() == brojKreveta && ts.getRaspored().equals(raspored)) {
 				return true;
@@ -596,7 +616,11 @@ public class AdminMenu {
 		}
 		return false;
 	}
+<<<<<<< HEAD
 	private void dodavanjeTipaSobe() {
+=======
+	private void dodavanjeTipaSobe() {	//radi
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 		System.out.println("  Dodavanje tipa sobe");
 		Scanner scanner = new Scanner(System.in);
 		System.out.print("  Unesite broj kreveta: ");

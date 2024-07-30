@@ -25,9 +25,12 @@ public class TipSobe {
 	@Override
 	public String toString() {
 		return "[brojKreveta=" + brojKreveta + ", raspored=" + raspored + "]";
+<<<<<<< HEAD
 	}
 	public String[] forTable() {
 		String [] ret = {Integer.toString(brojKreveta), raspored};
 		return ret;
+=======
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 	}
 }

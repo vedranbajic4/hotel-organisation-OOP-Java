@@ -53,8 +53,12 @@ public class Kalkulacija {
 						}
 					}
 				}
+<<<<<<< HEAD
 				if(mojc != null)
 					cena += mc.getCena(du.getId(), mojc.getId());
+=======
+				cena += mc.getCena(du.getId(), mojc.getId());
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 				//System.out.println(" += " +  mc.getCena(du.getId(), mojc.getId()));
 			}
 			//onda za taj idCenovnika uzmem sve stavke i sabiram na cenu	

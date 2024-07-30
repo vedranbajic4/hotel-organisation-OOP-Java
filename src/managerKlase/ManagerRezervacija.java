@@ -72,8 +72,13 @@ public class ManagerRezervacija {
 				}
 				rezervacije.add(new Rezervacija(Integer.parseInt(tokeni[0]), StatusRezervacije.valueOf(tokeni[1]),
 						mts.getTipSobe(Integer.parseInt(tokeni[2]), tokeni[3]),
+<<<<<<< HEAD
 						soba1, LocalDate.parse(tokeni[5]), LocalDate.parse(tokeni[6]), Float.parseFloat(tokeni[7]), LocalDate.parse(tokeni[8])));
 				int idGosta = Integer.parseInt(tokeni[9]);
+=======
+						soba1, LocalDate.parse(tokeni[5]), LocalDate.parse(tokeni[6]), Float.parseFloat(tokeni[7])));
+				int idGosta = Integer.parseInt(tokeni[8]);
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 				mg.getGostById(idGosta).dodajRezervaciju(rezervacije.get(rezervacije.size()-1));
 			}
 			br.close();

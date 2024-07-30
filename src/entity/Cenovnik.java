@@ -28,6 +28,11 @@ public class Cenovnik {
 		this.id = ID_GENERATOR;
 		ID_GENERATOR++;
 	}
+	public Cenovnik(LocalDate poc, LocalDate kraj) {
+		this.datumPocetka = poc;
+		this.datumKraja = kraj;
+		this.id = ID_GENERATOR++;
+	}
 	public int getId() {
 		return this.id;
 	}

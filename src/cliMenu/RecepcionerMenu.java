@@ -20,7 +20,11 @@ public class RecepcionerMenu {
 	private ManagerFactory mf;
 	private Recepcioner trenUser;
 	private Filter filter;
+<<<<<<< HEAD
 	private Kalkulacija kalk;
+=======
+	Kalkulacija kalk;
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 	
 	public RecepcionerMenu(ManagerFactory mf, Recepcioner trenUser) {
 		this.kalk = new Kalkulacija(mf.getMC());

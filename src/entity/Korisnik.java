@@ -15,6 +15,10 @@ public abstract class Korisnik {
 	public String korisnickoIme;
 	public String lozinka;
 	private static int id_gen = 1;
+<<<<<<< HEAD
+=======
+
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 	
 	public Korisnik() {}
 	
@@ -52,19 +56,28 @@ public abstract class Korisnik {
 		this.lozinka = lozinka;
 		if(id_gen <= id) id_gen = id + 1;
 	}
+<<<<<<< HEAD
 	//GETERI
+=======
+	
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 	public int getId() {
 		return id;
 	}
 	public String getKorisnickoIme() {
 		return this.korisnickoIme;
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 	public String getIme() {
 		return this.ime;
 	}
 	public String getPrezime() {
 		return this.prezime;
 	}
+<<<<<<< HEAD
 	public String getLozinka() {
 		return this.lozinka;
 	}
@@ -114,12 +127,39 @@ public abstract class Korisnik {
 		this.datumRodjenja = datumRodjenja;
 	}
 	
+=======
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 	public boolean postojiKorisnik(String korisnickoIme, String lozinka) {
 		return this.korisnickoIme.equals(korisnickoIme) && this.lozinka.equals(lozinka);
 	}
 	public boolean postojiKorisnik(String korisnickoIme) {
 		return this.korisnickoIme.equals(korisnickoIme);
 	}
+<<<<<<< HEAD
+=======
+
+	
+	public void setPrezime(String prezime) {
+		this.prezime = prezime;
+	}
+
+	public void setAdresa(String adresa) {
+		this.adresa = adresa;
+	}
+
+	public void setTelefon(String telefon) {
+		this.telefon = telefon;
+	}
+
+	public void setLozinka(String lozinka) {
+		this.lozinka = lozinka;
+	}
+
+	public void setKorisnickoIme(String korisnickoIme) {
+		this.korisnickoIme = korisnickoIme;
+	}
+	
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 	
 	@Override
 	public String toString() {

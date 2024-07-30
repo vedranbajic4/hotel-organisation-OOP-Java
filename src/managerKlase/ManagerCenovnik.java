@@ -104,6 +104,7 @@ public class ManagerCenovnik{
 		}
 		return null;
 	}
+<<<<<<< HEAD
 	public boolean isOnCenovnik(int idDodatneUsluge, int idCenovnika) {
 		for (Stavka s : stavke) {
 			if (s.getDodatnaUsluga().getId() == idDodatneUsluge && s.getCenovnik() == idCenovnika) {
@@ -136,6 +137,13 @@ public class ManagerCenovnik{
 			}
 		}
 	}
+=======
+
+	public List<Cenovnik> getCenovnikByTipSobe(TipSobe q) {
+		return cenovnici.get(q);
+	}
+	
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 	public List<Stavka> getStavkeByCenovnik(int id){
 		List<Stavka> ret = new ArrayList<Stavka>();
 		for (Stavka s : stavke) {
@@ -153,6 +161,7 @@ public class ManagerCenovnik{
 		}
 		return -1;
 	}
+<<<<<<< HEAD
 	public void removeStavka(int idUsluge, int idCenovnika) {
 		for (Stavka s : stavke) {
 			if (s.getDodatnaUsluga().getId() == idUsluge && s.getCenovnik() == idCenovnika) {
@@ -161,6 +170,9 @@ public class ManagerCenovnik{
 			}
 		}
 	}
+=======
+	
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 	
 	//seter za cenu stavke
 	public void setCenaForStavka(int idStavke, int idCenovnika, float cena) {

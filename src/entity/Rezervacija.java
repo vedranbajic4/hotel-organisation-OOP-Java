@@ -16,7 +16,10 @@ public class Rezervacija {
 	private List<DodatnaUsluga> usluge;		//usluge koje gost zeli 
 	private float cena = 0;					//cena rezervacije
 	private static int ID_GENERATOR = 1;
+<<<<<<< HEAD
 	private LocalDate datumKreiranja;
+=======
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 	
 	//konstruktori
 	public Rezervacija() {
@@ -30,7 +33,10 @@ public class Rezervacija {
 		this.datumDolaska = datumDolaska;
 		this.datumOdlaska = datumOdlaska;
 		this.usluge = new ArrayList<DodatnaUsluga>();
+<<<<<<< HEAD
 		this.datumKreiranja = LocalDate.now();
+=======
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 	}
 	public Rezervacija(int id, StatusRezervacije status, TipSobe tipSobe, Soba soba, LocalDate datumDolaska, LocalDate datumOdlaska, float cena) {
 		if(id >= ID_GENERATOR) ID_GENERATOR = id+1;
@@ -42,7 +48,10 @@ public class Rezervacija {
         this.datumOdlaska = datumOdlaska;
         this.usluge = new ArrayList<DodatnaUsluga>();
         this.cena = cena;
+<<<<<<< HEAD
         this.datumKreiranja = LocalDate.now();
+=======
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
     }
 	public Rezervacija(int id, TipSobe tipSobe, LocalDate datumDolaska, LocalDate datumOdlaska, ArrayList<DodatnaUsluga> usluge) {
 		if(id >= ID_GENERATOR) ID_GENERATOR = id+1;
@@ -85,6 +94,10 @@ public class Rezervacija {
         this.usluge = usluge;
         this.datumKreiranja = datumKreiranja;
     }
+<<<<<<< HEAD
+=======
+	
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 	//geteri i seteri
 	public float getUkupnaCena() {
 		return this.cena;
@@ -163,6 +176,7 @@ public class Rezervacija {
 	public String toFileString() {
 		int sobaId = -1;
 		if(this.soba != null) sobaId = this.soba.getId();
+<<<<<<< HEAD
 		return (id+","+status+","+tipSobe.getBrojKreveta()+"," +tipSobe.getRaspored()+","+sobaId+","+datumDolaska+","+datumOdlaska+","+cena+","+datumKreiranja);
 	}
 	public String[] forTable() {
@@ -173,6 +187,11 @@ public class Rezervacija {
 		return ret;
 	}
 	
+=======
+		return (id+","+status+","+tipSobe.getBrojKreveta()+"," +tipSobe.getRaspored()+","+sobaId+","+datumDolaska+","+datumOdlaska+","+cena);
+	}
+
+>>>>>>> e5a83006847e2c36fff78d44ebc6f7f1ee431116
 	public String smallString() {
 		return id + ", " + tipSobe + ", od "
 				+ datumDolaska + ", do " + datumOdlaska;
